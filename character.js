@@ -1,15 +1,3 @@
-/* THE CONCEPT OF THE VISUALS
-- a bird character
-- a tree
-- a blue sky
-- clouds
- 
-THE MECHANICS
-- move with the arrows to control the bird
-- the bird lands carefully on a tree branch
-- implement gravity
-- end the game if crashing */
-
 //postion variables
 let x = 100;
 let y = 100;
@@ -75,16 +63,16 @@ function drawtree() {
   ellipse(x - 90, y + 520, 120, 105);
   ellipse(x - 1, y + 520, 100, 105);
   ellipse(x - 65, y + 450, 120, 105);
-  pop();
+  pop(); 
 }
 
 //draw a nest
-function drawNest() {
-  push();
-  noStroke();
-  fill(222, 184, 135);
+function drawNest(){
+push();
+noStroke();
+fill(222,184,135);
 
-  pop();
+pop();
 }
 
 function character(x, y) {
@@ -170,7 +158,7 @@ function draw() {
     //left movement
     if (keyIsDown(37 || 65)) {
       characterX = characterX - 10;
-    }
+    }  
 
     //right movement
     if (keyIsDown(39 || 68)) {
@@ -183,3 +171,4 @@ function draw() {
     }
   }
 }
+  
