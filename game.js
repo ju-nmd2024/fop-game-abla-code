@@ -16,24 +16,6 @@ function setup() {
   createCanvas(700, 760);
   background(255);
 }
-
-// game screen functions
-function goodjobscreen() {
-  push();
-  background(57, 166, 45);
-  textSize(40);
-  textAlign(CENTER);
-  text("WELL DONE!", 330, 300);
-  pop();
-}
-function badjobscreen() {
-  push();
-  background(255, 0, 0);
-  textSize(40);
-  textAlign(CENTER);
-  text("YOU BROKE THE BRANCH", 330, 300);
-  pop();
-}
 function startScreen() {
   push();
   background(245, 132, 66);
@@ -49,9 +31,27 @@ function gameScreen() {
   // the character
   drawtree();
   drawCloud();
-  character(x, y);
+  character();
 }
-//background details
+function goodjobscreen() {
+  push();
+  background(57, 166, 45);
+  textSize(40);
+  textAlign(CENTER);
+  text("WELL DONE!", 330, 300);
+  text("click on the screen to restart", 350, 400);
+  pop();
+}
+function badjobscreen() {
+  push();
+  background(255, 0, 0);
+  textSize(40);
+  textAlign(CENTER);
+  text("YOU BROKE THE BRANCH", 330, 300);
+  text("click on the screen to restart", 350, 400);
+  pop();
+}
+// the cloud
 function drawCloud() {
   push();
   noStroke();
@@ -65,7 +65,6 @@ function drawCloud() {
   ellipse(mx + 20, my + 10, 50, 50);
   pop();
 }
-
 // the tree
 function drawtree() {
   push();
@@ -169,20 +168,21 @@ function character() {
 
 function draw() {
   background(135, 206, 235);
+  drawtree();
+  drawCloud();
+  character(x, y);
   if (state === "start") {
     startScreen();
   } else if (state === "birddrop") {
-    character(x, y);
-    drawtree(tx, ty);
-    drawCloud(mx, my);
+    gameScreen();
   } else if (state === "win") {
     goodjobscreen();
   } else if (state === "losing") {
     badjobscreen();
-  }
-
+  } 
+  // enter to make the bird drop = gamestart
   if (keyIsDown(13)) {
-    state = "birddrop";
+   state = "birddrop";
   }
   //checks if the game state is true
   if (state === "birddrop") {
@@ -191,7 +191,6 @@ function draw() {
     gravitation = gravitation + acceleration;
     acceleration += 0.008;
   }
-
   // decrease the velocity when pressing space
   if (state === "birddrop") {
     if (keyIsDown(32)) {
@@ -205,7 +204,6 @@ function draw() {
     if (keyIsDown(39)) {
       x = x + 10;
     }
-
     //to check if my bird is going too fast >20 (lost) or slow<20 which is win
     if (y >= 450) {
       if (gravitation > 10) {
@@ -224,3 +222,27 @@ function draw() {
     }
   }
 }
+// from the p5js website
+function mouseClicked() {
+  if (state === "start") {
+    resetGame();
+    state = "birddrop";
+  } else if (state === "win" || state === "losing") {
+    resetGame();
+    state = "start";
+  }
+}
+
+// you click with the mouse to reset
+function resetGame() {
+  x = 100;
+  y = 100;
+  gravitation = 0.1;
+  acceleration = 0;
+}
+ 
+
+ 
+
+
+ 
